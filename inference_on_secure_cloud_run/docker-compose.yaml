@@ -1,0 +1,29 @@
+version: '3'
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: inference
+    platform: linux/amd64
+    container_name: "inference-server"
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - $HOME/.config/gcloud:/root/.config/gcloud
+    command: gunicorn inference.main:app -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:5000
+    tty: true
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://localhost:50000 || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    expose:
+      - 5000
+    environment:
+      - CLOUDSDK_CONFIG=/root/.config/gcloud
+      - GOOGLE_APPLICATION_CREDENTIALS=/root/.config/gcloud/application_default_credentials.json
+      # FIXME
+      - GOOGLE_CLOUD_PROJECT=<your-project-id>

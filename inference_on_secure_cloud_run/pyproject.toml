@@ -12,15 +12,19 @@ python = "^3.11"
 [tool.poetry.group.shared.dependencies]
 pandas = "^2.2.0"
 taskipy = "^1.12.2"
-
-
-[tool.poetry.group.train.dependencies]
 scikit-learn = "^1.4.0"
 
 
 [tool.poetry.group.inference.dependencies]
 fastapi = "^0.109.0"
 gunicorn = "^21.2.0"
+uvicorn = "^0.26.0"
+gcloud = "^0.18.3"
+google-cloud-storage = "^2.14.0"
+
+
+[tool.poetry.group.train.dependencies]
+polars = "^0.20.5"
 
 [tool.taskipy.tasks]
 update_shared = { cmd = "poetry export --without-hashes --with shared --output requirements/shared.txt", help = "update shared requirements" }
