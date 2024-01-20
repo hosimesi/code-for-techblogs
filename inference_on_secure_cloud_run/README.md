@@ -1,6 +1,6 @@
 # Overview
 IP-restricted secure inference endpoints on Cloud Run.\
-blog link: https://
+blog link: https://zenn.dev/hosimesi/articles/36fedaa5425c7b
 
 # Pre-requirements
 1. Install Python and poetry.
