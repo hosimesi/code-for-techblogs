@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "inference-on-secure-cloud-run"
+version = "0.1.0"
+description = ""
+authors = ["hosimesi <hosimesi11@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[tool.poetry.group.shared.dependencies]
+pandas = "^2.2.0"
+taskipy = "^1.12.2"
+
+
+[tool.poetry.group.train.dependencies]
+scikit-learn = "^1.4.0"
+
+
+[tool.poetry.group.inference.dependencies]
+fastapi = "^0.109.0"
+gunicorn = "^21.2.0"
+
+[tool.taskipy.tasks]
+update_shared = { cmd = "poetry export --without-hashes --with shared --output requirements/shared.txt", help = "update shared requirements" }
+update_train = { cmd = "poetry export --without-hashes --with train --output requirements/train.txt", help = "update train requirements" }
+update_inference = { cmd = "poetry export --without-hashes --with inference --output requirements/inference.txt", help = "update inference requirements" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
