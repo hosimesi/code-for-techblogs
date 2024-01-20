@@ -58,8 +58,9 @@ push:
 
 .PHONY: run/train
 run/train:
-	docker run -it --rm \
-		$(ARTIFACT_REPOSITORY)/$(PROJECT_ID)/$(REPOSITORY_NAME)/$(TRAIN_IMAGE_NAME):$(SHORT_SHA)
+	# docker run -it --rm \
+	# 	$(ARTIFACT_REPOSITORY)/$(PROJECT_ID)/$(REPOSITORY_NAME)/$(TRAIN_IMAGE_NAME):$(SHORT_SHA)
+	poetry run python train/main.py
 
 .PHONY: run/inference
 run/inference:
