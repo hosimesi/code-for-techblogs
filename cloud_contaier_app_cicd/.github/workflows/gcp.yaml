@@ -1,0 +1,53 @@
+name: Run creating docker image and deploy to cloud run.
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  gcp:
+    name: Deploy to Cloud Run.
+
+    env:
+      SERVICE_NAME: your-service-name
+      REPOSITORY_NAME: your-repository-name
+      REGION: asia-northeast1
+      ARTIFACT_REPOSITORY: asia-northeast1-docker.pkg.dev
+      IMAGE_NAME: your-image-name
+      DOCKERFILE: docker/Dockerfile
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_GITHUB_ACTIONS_SERVICE_ACCOUNT }}
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+        with:
+          version: '>= 363.0.0'
+
+      - name: Authorize Docker
+        run: gcloud auth configure-docker $ARTIFACT_REPOSITORY --quiet
+
+      - name: Build and push Docker image to Artifact Registry
+        run: |
+          docker build -t $ARTIFACT_REPOSITORY/$GCP_PROJECT/$REPOSITORY_NAME/$IMAGE_NAME:latest -f $DOCKERFILE .
+          docker push $ARTIFACT_REPOSITORY/$GCP_PROJECT/$REPOSITORY_NAME/$IMAGE_NAME:latest
+
+      - name: Deploy to Cloud Run
+        run: |-
+          gcloud run services update $SERVICE_NAME \
+            --image=$ARTIFACT_REPOSITORY/$GCP_PROJECT/$REPOSITORY_NAME/$IMAGE_NAME:latest \
+            --region=$REGION
