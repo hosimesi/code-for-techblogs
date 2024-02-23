@@ -29,7 +29,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.GTIHUB_ACTIONS_AWS_ROLE }}
-          aws-region: $REGION
+          aws-region: ${{ env.REGION }}
 
       - name: Authorize Docker
         id: login-ecr
