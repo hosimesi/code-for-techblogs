@@ -1,0 +1,4 @@
+Makefile
+*.tfstate*
+*.hcl
+terraform-provider-aws*
