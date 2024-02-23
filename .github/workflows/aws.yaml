@@ -28,7 +28,7 @@ jobs:
       - id: 'auth'
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.GTIHUB_ACTIONS_AWS_ROLE }}
+          role-to-assume: ${{ secrets.AWS_ACTIONS_ROLE_ARN }}
           aws-region: ${{ env.REGION }}
 
       - name: Authorize Docker
