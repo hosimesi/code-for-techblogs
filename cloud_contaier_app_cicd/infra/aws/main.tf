@@ -112,7 +112,7 @@ resource "aws_iam_role" "sample_actions_role" {
         Condition = {
           StringEquals = {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com",
-            # TODO: Please set your branch name
+            # FIXME: Please set your branch name
             "token.actions.githubusercontent.com:sub" = "repo:hosimesi/code-for-techblogs:ref:refs/heads/main"
           }
         }

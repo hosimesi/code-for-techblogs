@@ -9,7 +9,7 @@ jobs:
     name: Deploy to App Runner.
 
     env:
-      # TODO: Set your own repository name
+      # FIXME: Set your own repository name
       REPOSITORY_NAME: sample-aws-ecr-repository
       REGION: ap-northeast-1
       DOCKERFILE: docker/Dockerfile
