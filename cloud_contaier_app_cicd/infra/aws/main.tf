@@ -51,7 +51,7 @@ resource "aws_apprunner_service" "sample_apprunner_service" {
     authentication_configuration {
       access_role_arn = aws_iam_role.sample_apprunner_role.arn
     }
-    auto_deployments_enabled = false
+    auto_deployments_enabled = true
     image_repository {
       image_configuration {
         port = "80"
