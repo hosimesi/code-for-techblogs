@@ -12,6 +12,7 @@ jobs:
       # FIXME: Set your own repository name
       ECR_REPOSITORY: sample-aws-ecr-repository
       REGION: ap-northeast-1
+      # DOCKERFILE: docker/Dockerfile
       DOCKERFILE: docker/Dockerfile
 
     runs-on: ubuntu-latest
