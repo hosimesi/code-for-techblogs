@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  gcp:
+  aws:
     name: Deploy to App Runner.
 
     env:

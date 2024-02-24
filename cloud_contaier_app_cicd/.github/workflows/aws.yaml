@@ -5,13 +5,14 @@ on:
     branches: [main]
 
 jobs:
-  gcp:
+  aws:
     name: Deploy to App Runner.
 
     env:
       # FIXME: Set your own repository name
-      REPOSITORY_NAME: sample-aws-ecr-repository
+      ECR_REPOSITORY: sample-aws-ecr-repository
       REGION: ap-northeast-1
+      # DOCKERFILE: docker/Dockerfile
       DOCKERFILE: docker/Dockerfile
 
     runs-on: ubuntu-latest
@@ -28,8 +29,8 @@ jobs:
       - id: 'auth'
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.GTIHUB_ACTIONS_AWS_ROLE }}
-          aws-region: $REGION
+          role-to-assume: ${{ secrets.AWS_ACTIONS_ROLE_ARN }}
+          aws-region: ${{ env.REGION }}
 
       - name: Authorize Docker
         id: login-ecr
