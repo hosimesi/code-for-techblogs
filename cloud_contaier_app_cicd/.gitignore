@@ -1,4 +1,4 @@
 Makefile
 *.tfstate*
 *.hcl
-terraform-provider-aws*
+terraform-provider-*
