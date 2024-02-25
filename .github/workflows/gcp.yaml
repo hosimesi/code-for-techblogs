@@ -39,8 +39,7 @@ jobs:
           version: '>= 363.0.0'
 
       - name: Authorize Docker
-        # run: gcloud auth configure-docker $ARTIFACT_REPOSITORY --quiet
-        run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+        run: gcloud auth configure-docker $ARTIFACT_REPOSITORY --quiet
 
       - name: Build and push Docker image to Artifact Registry
         run: |
