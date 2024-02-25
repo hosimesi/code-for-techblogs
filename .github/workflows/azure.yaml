@@ -36,7 +36,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Authorize Docker
-        run: az acr login -n $CONTAINER_REGISTRY --subscription ${{ secrets AZURE_SUBSCRIPTION_ID }}
+        run: az acr login -n $CONTAINER_REGISTRY --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Build and push Docker image to Azure Container Registry
         run: |
