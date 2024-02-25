@@ -114,7 +114,6 @@ resource "google_project_iam_member" "admin" {
   member  = "serviceAccount:${google_service_account.github_actions_service_account.email}"
 }
 
-
 resource "google_project_iam_member" "workload_identity_user" {
   project = var.project
   role    = "roles/iam.workloadIdentityUser"
