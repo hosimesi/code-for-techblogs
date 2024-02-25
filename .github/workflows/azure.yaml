@@ -2,7 +2,7 @@ name: Run creating docker image and deploy to azure container apps
 
 on:
   push:
-    branches: [feature/azure-cicd]
+    branches: [main]
 
 jobs:
   azure:
