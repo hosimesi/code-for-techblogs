@@ -122,7 +122,8 @@ resource "azuread_application_federated_identity_credential" "sample-github-acti
   description    = "Federated identity credential for GitHub Actions"
   audiences      = ["api://AzureADTokenExchange"]
   issuer         = "https://token.actions.githubusercontent.com"
-  subject        = "repo:hosimesi/code-for-techblogs:ref:refs/heads/main"
+  # FIXME: Replace with your repository
+  subject = "repo:hosimesi/code-for-techblogs:ref:refs/heads/main"
 }
 
 # ACR Push Role
