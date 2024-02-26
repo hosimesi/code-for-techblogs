@@ -48,4 +48,5 @@ jobs:
           az containerapp update \
             -n $CONTAINER_APPS_NAME \
             -g $RESOURCE_GROUP \
+            --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} \
             --image $AZURE_CONTAINER_REGISTRY/$REPOSITORY_NAME:latest
