@@ -69,8 +69,9 @@ resource "aws_apprunner_service" "sample_apprunner_service" {
 
 # actions用
 resource "aws_iam_openid_connect_provider" "sample_iam_openid_connect_provider" {
-  url             = "https://token.actions.githubusercontent.com"
-  client_id_list  = ["sts.amazonaws.com"]
+  url            = "https://token.actions.githubusercontent.com"
+  client_id_list = ["sts.amazonaws.com"]
+  # terraformの公式documentのまま
   thumbprint_list = ["cf23df2207d99a74fbe169e3eba035e633b65d94"]
 }
 

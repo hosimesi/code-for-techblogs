@@ -15,6 +15,7 @@ jobs:
       ARTIFACT_REPOSITORY: asia-northeast1-docker.pkg.dev
       IMAGE_NAME: sample-image # FIXME: Set your own image name
       DOCKERFILE: docker/Dockerfile
+      GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
 
     runs-on: ubuntu-latest
 
