@@ -1,0 +1,60 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: train-workflow-
+  namespace: argo
+spec:
+  serviceAccountName: argo-workflows-sa
+  entrypoint: main-job
+  volumes:
+  - name: docker-secret-key
+    secret:
+      secretName: docker-credentials
+  imagePullSecrets:
+  - name: docker-credentials
+  ttlStrategy:
+    secondsAfterCompletion: 60
+    secondsAfterSuccess: 10
+    secondsAfterFailure: 10
+  arguments:
+    parameters:
+    - name: config
+      value: '{}'
+  templates:
+  - name: main-job
+    inputs:
+      parameters:
+      - name: config
+    steps:
+    - - name: extract-job
+        templateRef:
+          name: extract-job
+          template: extract
+        arguments:
+          parameters:
+          - name: config
+            value: "{{inputs.parameters.config}}"
+
+    - - name: transform-job
+        templateRef:
+          name: transform-job
+          template: transform
+        when: "{{steps.entrypoint-job.outputs.parameters.audio-configs}} != []"
+        arguments:
+          parameters:
+          - name: audio-configs
+            value: "{{steps.entrypoint-job.outputs.parameters.audio-configs}}"
+          - name: global-config
+            value: "{{steps.entrypoint-job.outputs.parameters.global-config}}"
+
+      - name: train-job
+        templateRef:
+          name: train-job
+          template: train
+        when: "{{steps.entrypoint-job.outputs.parameters.text-configs}} != []"
+        arguments:
+          parameters:
+          - name: text-configs
+            value: "{{steps.entrypoint-job.outputs.parameters.text-configs}}"
+          - name: global-config
+            value: "{{steps.entrypoint-job.outputs.parameters.global-config}}"
