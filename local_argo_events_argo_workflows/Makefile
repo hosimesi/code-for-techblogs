@@ -53,7 +53,6 @@ argo-install:
 	kubectl kustomize ./argo-infra/argo-events/overlays/local | kubectl apply -f -
 	kubectl kustomize ./argo-infra/argo-workflows/overlays/local | kubectl apply -f -
 	kubectl kustomize ./argo-infra/event-bus/overlays/local | kubectl apply -f -
-	# kubectl kustomize ./argo-infra/external-secret/overlays/local | kubectl apply -f -
 
 
 # FIXME: set your mail address
