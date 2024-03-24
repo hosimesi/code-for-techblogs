@@ -25,7 +25,7 @@ spec:
               spec:
                 serviceAccountName: argo-workflows-sa
                 workflowTemplateRef:
-                  name: train-workflow
+                  name: train-workflow-main
                 arguments:
                   parameters:
                   - name: config

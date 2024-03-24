@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: gcp-pubsub
+  namespace: argo-events
+spec:
+  pubSub:
+    train-workflow-trigger:
+      topic: argo-workflows-topic
+      projectID: <your-gcp-project> # FIXME: Replace with your GCP project ID
+      subscriptionID: argo-workflows-topic-sub
+      credentialSecret:
+        name: gcp-credentials
+        key: key.json

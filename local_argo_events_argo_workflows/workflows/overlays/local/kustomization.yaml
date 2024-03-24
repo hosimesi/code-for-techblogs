@@ -11,9 +11,6 @@ resources:
   - ../../overlays/local/argo-workflows/transform.yaml
   - ../../overlays/local/argo-workflows/train.yaml
   - ../../overlays/local/argo-workflows/workflow.yaml
-  - ../../overlays/local/secret-store.yaml
 
 patches:
-  - path: external-secret.yaml
-  - path: workflow.yaml
   - path: argo-events/event-source.yaml

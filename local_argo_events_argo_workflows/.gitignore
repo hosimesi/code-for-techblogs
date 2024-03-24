@@ -4,3 +4,7 @@
 *.terraform.lock.hcl
 *.tfstate
 *.tfstate.backup
+*_key.json
+*.DS_Store
+*.csv
+.ruff_cache/

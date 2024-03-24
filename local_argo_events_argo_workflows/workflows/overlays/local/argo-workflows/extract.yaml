@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: extract-job
+  namespace: argo
+spec:
+  templates:
+  - name: extract
+    inputs:
+      parameters:
+      - name: config
+    container:
+      image: asia-northeast1-docker.pkg.dev/<your-gcp-project>/argo-workflows/argo-workflows:latest # FIXME: Replace
+      command: ["python3", "src/workflows/extract/main.py"]
+      args: ["-c", "{{inputs.parameters.config}}"]
+      imagePullPolicy: Always
+      env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/google/key.json
+      volumeMounts:
+      - name: gcp-credentials
+        mountPath: /var/secrets/google
+        readOnly: true
+    volumes:
+    - name: gcp-credentials
+      secret:
+        secretName: gcp-credentials
+
+    outputs:
+      parameters:
+        - name: extracted-config
+          valueFrom:
+            path: "src/artifacts/extracted_config.json"
+    retryStrategy:
+      limit: 3
+    metadata:
+      annotations:
+        description: "This task is entrypoint of extract step."

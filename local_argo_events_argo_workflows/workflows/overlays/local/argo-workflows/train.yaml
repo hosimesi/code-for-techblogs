@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: train-job
+  namespace: argo
+spec:
+  templates:
+  - name: train
+    inputs:
+      parameters:
+      - name: config
+    container:
+      image: asia-northeast1-docker.pkg.dev/<your-gcp-project>/argo-workflows/argo-workflows:latest # FIXME: Replace
+      command: ["python3", "src/workflows/train/main.py"]
+      args: ["-c", "{{inputs.parameters.config}}"]
+      imagePullPolicy: Always
+      env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/google/key.json
+      volumeMounts:
+      - name: gcp-credentials
+        mountPath: /var/secrets/google
+        readOnly: true
+    volumes:
+    - name: gcp-credentials
+      secret:
+        secretName: gcp-credentials
+
+    retryStrategy:
+      limit: 3
+    metadata:
+      annotations:
+        description: "This task is entrypoint of train step."

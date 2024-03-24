@@ -19,7 +19,7 @@ spec:
   arguments:
     parameters:
     - name: config
-      value: '{}'
+      value: '{"kind": "storage#object", "id": "test", "selfLink": "test", "name": "test/original.csv", "bucket": "argo-workflows-bucket", "generation": "1711281065202925", "metageneration": "1", "contentType": "text/csv", "timeCreated": "2024-03-24T11:51:05.208Z",  "updated": "2024-03-24T11:51:05.208Z", "storageClass": "STANDARD", "timeStorageClassUpdated": "2024-03-24T11:51:05.208Z", "size": "61194", "md5Hash": "test", "mediaLink": "test", "contentLanguage": "en", "crc32c": "test", "etag": "etag"}'
   templates:
   - name: main-job
     inputs:
@@ -39,22 +39,17 @@ spec:
         templateRef:
           name: transform-job
           template: transform
-        when: "{{steps.entrypoint-job.outputs.parameters.audio-configs}} != []"
         arguments:
           parameters:
-          - name: audio-configs
-            value: "{{steps.entrypoint-job.outputs.parameters.audio-configs}}"
-          - name: global-config
-            value: "{{steps.entrypoint-job.outputs.parameters.global-config}}"
+          - name: config
+            value: "{{steps.extract-job.outputs.parameters.extracted-config}}"
 
-      - name: train-job
+    - - name: train-job
         templateRef:
           name: train-job
           template: train
-        when: "{{steps.entrypoint-job.outputs.parameters.text-configs}} != []"
         arguments:
           parameters:
-          - name: text-configs
-            value: "{{steps.entrypoint-job.outputs.parameters.text-configs}}"
-          - name: global-config
-            value: "{{steps.entrypoint-job.outputs.parameters.global-config}}"
+          - name: config
+            value: "{{item}}"
+        withParam: "{{steps.transform-job.outputs.parameters.transformed-configs}}"
