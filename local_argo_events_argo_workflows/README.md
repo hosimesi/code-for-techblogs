@@ -1,6 +1,6 @@
 # Overview
 Local Argo Workflows and Argo events.\
-blog link: https://zenn.dev/hosimesi/articles/36fedaa5425c7b
+blog link: https://zenn.dev/articles/4fbd8d43d1f11a
 
 # Pre-requirements
 1. Install kind, kubectl, kustomize, poetry
