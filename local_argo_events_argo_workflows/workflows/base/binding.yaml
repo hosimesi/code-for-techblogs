@@ -1,0 +1,58 @@
+# Description: This file contains the RoleBinding and ClusterRoleBinding for the Argo Workflow and Argo Events service accounts.
+# argo-workflows-sa role binding for argo-workflows-sa in argo namespace
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: argo-workflow-role-binding
+  namespace: argo
+subjects:
+  - kind: ServiceAccount
+    name: argo-workflows-sa
+    namespace: argo
+roleRef:
+  kind: Role
+  name: argo-workflow-role
+  apiGroup: rbac.authorization.k8s.io
+# argo-events-sa claster role binding for argo-events-sa.
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: argo-events-cluster-role-binding
+  namespace: argo-events
+subjects:
+  - kind: ServiceAccount
+    name: argo-events-sa
+    namespace: argo-events
+roleRef:
+  kind: ClusterRole
+  name: argo-events-cluster-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argo-events-role-binding
+  namespace: argo-events
+subjects:
+- kind: ServiceAccount
+  name: argo-events-sa
+  namespace: argo-events
+roleRef:
+  kind: Role
+  name: argo-events-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argo-workflow-creator-binding
+  namespace: argo
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: argo-workflow-creator-role
+subjects:
+- kind: ServiceAccount
+  name: argo-events-sa
+  namespace: argo-events

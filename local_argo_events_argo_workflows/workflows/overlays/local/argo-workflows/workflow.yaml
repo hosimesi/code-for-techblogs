@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: train-workflow-main
+  namespace: argo
+spec:
+  serviceAccountName: argo-workflows-sa
+  entrypoint: main-job
+  volumes:
+  - name: docker-secret-key
+    secret:
+      secretName: docker-credentials
+  imagePullSecrets:
+  - name: docker-credentials
+  ttlStrategy:
+    secondsAfterCompletion: 60
+    secondsAfterSuccess: 10
+    secondsAfterFailure: 10
+  arguments:
+    parameters:
+    - name: config
+
+  templates:
+  - name: main-job
+    inputs:
+      parameters:
+      - name: config
+    steps:
+    - - name: extract-job
+        templateRef:
+          name: extract-job
+          template: extract
+        arguments:
+          parameters:
+          - name: config
+            value: "{{inputs.parameters.config}}"
+
+    - - name: transform-job
+        templateRef:
+          name: transform-job
+          template: transform
+        arguments:
+          parameters:
+          - name: config
+            value: "{{steps.extract-job.outputs.parameters.extracted-config}}"
+
+    - - name: train-job
+        templateRef:
+          name: train-job
+          template: train
+        arguments:
+          parameters:
+          - name: config
+            value: "{{item}}"
+        withParam: "{{steps.transform-job.outputs.parameters.transformed-configs}}"

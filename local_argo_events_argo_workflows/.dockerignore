@@ -1,0 +1,11 @@
+argo-infra
+docker
+infra
+workflows
+*.env
+*_key.json
+*.DS_Store
+*.csv
+pyproject.toml
+poetry.lock
+.ruff_cache
