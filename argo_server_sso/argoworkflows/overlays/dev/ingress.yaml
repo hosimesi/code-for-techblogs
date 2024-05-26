@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argo-server-ingress
+  namespace: argo-workflows
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: argo-workflows-server-ip
+    networking.gke.io/managed-certificates: argo-worklows-server-certificate
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argo-server
+                port:
+                  number: 80

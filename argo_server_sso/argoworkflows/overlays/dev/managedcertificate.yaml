@@ -1,0 +1,9 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: argo-worklows-server-certificate
+  namespace: argo-workflows
+spec:
+  domains:
+  # FIXME: Replace the following values with your own
+    - <your-domain>
