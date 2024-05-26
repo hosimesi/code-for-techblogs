@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argo-server
+  namespace: argo-workflows
+spec:
+  selector:
+    matchLabels:
+      app: argo-server
+  template:
+    spec:
+      containers:
+      - name: argo-server
+        args: ["server", "--secure=false", "--auth-mode=sso"]
+        resources:
+          requests:
+            cpu: 50m
+            memory: 200Mi
+          limits:
+            cpu: 100m
+            memory: 400Mi

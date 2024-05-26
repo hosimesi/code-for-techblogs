@@ -1,0 +1,7 @@
+Makefile
+.env
+.envrc
+*.hcl
+*tfstate*
+terraform-provider-google*
+LICENSE*

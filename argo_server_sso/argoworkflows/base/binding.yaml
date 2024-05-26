@@ -1,0 +1,137 @@
+# Description: This file contains the RoleBinding and ClusterRoleBinding for the Argo Workflow and Argo Events service accounts.
+# argo-workflows-sa role binding for argo-workflows-sa in argo namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argo-workflows-role-binding
+  namespace: argo-workflows
+subjects:
+  - kind: ServiceAccount
+    name: argo-workflows-sa
+    namespace: argo-workflows
+roleRef:
+  kind: Role
+  name: argo-workflows-role
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: read-secrets
+  namespace: argo-workflows
+subjects:
+- kind: ServiceAccount
+  name: argo-workflows-sa
+  namespace: argo-workflows
+roleRef:
+  kind: Role
+  name: secret-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-configmap
+  namespace: argo-workflows
+subjects:
+- kind: ServiceAccount
+  name: argo-workflows-sa
+  namespace: argo-workflows
+roleRef:
+  kind: Role
+  name: configmap-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: workflows-cluster-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: argo-workflows-sa
+  namespace: argo-workflows
+roleRef:
+  kind: ClusterRole
+  name: workflows-cluster-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: secret-creator-rolebinding
+  namespace: argo-workflows
+subjects:
+- kind: ServiceAccount
+  name: argo-workflows-sa
+  namespace: argo-workflows
+roleRef:
+  kind: Role
+  name: secret-creator-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: serviceaccount-list-clusterrolebinding
+subjects:
+- kind: ServiceAccount
+  name: argo-workflows-sa
+  namespace: argo-workflows
+roleRef:
+  kind: ClusterRole
+  name: serviceaccount-list-clusterrole
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: developer-rolebinding
+  namespace: argo-workflows
+subjects:
+  - kind: ServiceAccount
+    name: developer-sa
+    namespace: argo-workflows
+roleRef:
+  kind: Role
+  name: developer-role
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: business-rolebinding
+  namespace: argo-workflows
+subjects:
+  - kind: ServiceAccount
+    name: business-sa
+    namespace: argo-workflows
+roleRef:
+  kind: Role
+  name: business-role
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: developer-cluster-rolebinding
+subjects:
+  - kind: ServiceAccount
+    name: developer-sa
+    namespace: argo-workflows
+roleRef:
+  kind: ClusterRole
+  name: developer-cluster-role
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: business-cluster-rolebinding
+subjects:
+  - kind: ServiceAccount
+    name: business-sa
+    namespace: argo-workflows
+roleRef:
+  kind: ClusterRole
+  name: business-cluster-role
+  apiGroup: rbac.authorization.k8s.io

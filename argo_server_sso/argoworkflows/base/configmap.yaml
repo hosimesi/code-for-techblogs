@@ -1,0 +1,8 @@
+# For workflow archive to Cloud SQL
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: workflow-controller-configmap
+  namespace: argo-workflows
+data:
+  namespace: argo-workflows

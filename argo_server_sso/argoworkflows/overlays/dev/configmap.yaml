@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: workflow-controller-configmap
+  namespace: argo-workflows
+data:
+  sso: |
+    issuer: https://accounts.google.com
+    sessionExpiry: 12h
+    clientId:
+      name: argo-server-sso-secret
+      key: client-id
+    clientSecret:
+      name: argo-server-sso-secret
+      key: client-secret
+    # FIXME Replace the following value with your own
+    redirectUrl: https://<your-domain>/oauth2/callback
+    scopes:
+    - email
+    - profile
+    rbac:
+      enabled: true
+    insecureSkipVerify: false
