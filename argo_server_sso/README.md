@@ -1,6 +1,6 @@
 # Overview
 Repository for Argo Workflows used SSO .\
-blog link: https://zenn.dev/hosimesi/articles/75b53566a265aa
+blog link: https://zenn.dev/hosimesi/articles/d8cabcf1c53080
 
 
 # How to use
