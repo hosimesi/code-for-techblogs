@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package inference;
+
+
+message TranscribeRequest {
+    bytes audio_bytes = 1;
+    string target = 2;
+}
+
+message ASRResult {
+    string transcription = 1;
+}
+
+message TranscribeResponse {
+    map<string, ASRResult> result = 1;
+}
+
+service ASRInferenceServer {
+    rpc transcribe(TranscribeRequest) returns (TranscribeResponse) {}
+}

@@ -1,0 +1,107 @@
+
+[tool.mypy]
+ignore_missing_imports = true
+disallow_untyped_defs = true
+exclude = [
+    "tests/*",
+    "*/proto/*"
+]
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+[[tool.mypy.overrides]]
+module = "mypy-scripts.*"
+disallow_untyped_defs = false
+
+[tool.ruff]
+target-version = "py311"
+line-length = 127  # same as black
+indent-width = 4
+
+lint.select = [
+    "B",  # flake8-bugbear
+    "E",  # pycodestyle error
+    "F",  # pyflakes
+    "I",  # isort
+    "UP",  # pyupgrade
+    "W",  # pycodestyle warning
+]
+lint.ignore-init-module-imports = true
+exclude = [
+    "*/__init__.py",
+    ".tox",
+    ".git",
+    ".mypy_cache",
+    ".ruff_cache",
+    "*.pyi",
+    ".venv/*",
+    "*/proto/*"
+]
+
+[tool.ruff.lint.pydocstyle]
+# for pydocstyle
+convention = "google"
+
+[tool.ruff.lint.pylint]
+max-args = 10
+
+[tool.ruff.format]
+# Like Black, indent with spaces, rather than tabs.
+exclude = ["*.pyi"]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
+
+
+[project]
+name = "whisper-grpc-server"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "hosimesi", email = "hosimesi11@gmail.com" }
+]
+dependencies = [
+    "grpcio>=1.64.1",
+    "grpcio-tools>=1.64.1",
+    "faster-whisper>=1.0.2",
+    "pydantic>=2.7.4",
+    "transformers>=4.41.2",
+    "accelerate>=0.31.0",
+    "datasets>=2.20.0",
+]
+readme = "README.md"
+requires-python = ">= 3.12"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "pytest>=8.2.2",
+    "mypy>=1.10.0",
+    "ruff>=0.4.10",
+    "mypy-protobuf>=3.6.0",
+    "ffmpeg-python>=0.2.0",
+    "pydub>=0.25.1",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/whisper_grpc_server"]
+
+[tool.rye.scripts]
+server = { cmd = "docker compose up --build" }
+lint = { chain = ["format:ruff-check", "lint:ruff-fix", "lint:mypy", "lint:pytest" ] }
+"lint:ruff-check" = "ruff format . --check --diff"
+"lint:ruff-fix" = "ruff check ."
+"lint:mypy" = "mypy . --no-site-packages --explicit-package-bases"
+"lint:pytest" = "pytest -vv"

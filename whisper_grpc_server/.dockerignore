@@ -1,0 +1,49 @@
+# git files
+.git
+.gitattributes
+.gitignore
+.github
+
+# IDE files
+.idea
+
+# cache files
+.mypy_cache
+.pytest_cache
+.ruff_cache
+.tox
+
+# Test files
+tests
+
+# compose files
+compose.yaml
+
+# dependency lock files
+poetry.lock
+
+# Configuration files
+tox.ini
+
+# README files
+README.md
+
+# .local files
+.local/data/*
+.local/secrets/*
+
+
+*.env
+
+
+# src/pretrained_models/*
+
+*.slack
+
+secrets
+*.pyc
+
+pretrained_models/faster-whisper-large-v2
+pretrained_models/faster-whisper-large-v3
+pretrained_models/faster-distil-whisper-large-v2
+pretrained_models/faster-distil-whisper-large-v3
