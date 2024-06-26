@@ -1,0 +1,49 @@
+# For pytest
+.pytest_cache
+
+# For mypy
+.mypy_cache
+
+# For tox
+.tox
+
+# For Mac
+.DS_Store
+
+# For ruff
+.ruff_cache
+
+# For pyenv
+.python-version
+
+# For venv
+.venv
+
+# For python
+__pycache__/
+.env
+
+# For PyCharm
+.idea/workspace.xml
+.idea/tasks.xml
+
+# For local
+.local/data/
+.local/secrets/
+
+# For local key
+key.json
+
+pretrained_models
+
+.slack
+
+.metals
+
+secrets
+*.env
+.pytest_cache
+.ruff_cache
+logs
+
+samples

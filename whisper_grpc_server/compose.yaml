@@ -1,0 +1,22 @@
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: local
+    platform: linux/amd64
+    container_name: whisper_grpc_server
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    command: python src/main.py
+    tty: true
+    healthcheck:
+      test: ["CMD-SHELL", "grpc_health_probe -addr=:8080 || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    expose:
+      - 8080
