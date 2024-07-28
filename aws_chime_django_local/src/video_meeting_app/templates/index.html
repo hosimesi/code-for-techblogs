@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <title>Amazon Chime SDK Readiness Checker</title>
+</head>
+
+<body>
+    <div id="create meeting" class="flow text-center p-2">
+        <form id="createMeetingForm">
+            <label for="meetingName">ミーティング名:</label>
+            <input type="text" id="meetingName" name="meetingName"><br>
+            <label for="createdBy">作成者:</label>
+            <select id="createdBy">
+                {% for user in users %}
+                <option value="{{ user.user_id }}">{{ user.name }}</option>
+                {% endfor %}
+            </select><br>
+            <label>参加者:</label><br>
+            <div id="participants">
+                {% for user in users %}
+                <input type="checkbox" id="participant{{ user.user_id }}" value="{{ user.user_id }}">
+                <label for="participant{{ user.user_id }}">{{ user.name }}</label><br>
+                {% endfor %}
+            </div>
+            <input type="submit" value="作成">
+        </form>
+        <video id="video-view" autoplay></video>
+        <audio id="audio-view" autoplay></audio>
+    </div>
+
+    <div id="meetingTable">
+        <h1>Meeting List</h1>
+        <table>
+            <tr>
+                <th>会議 ID</th>
+                <th>会議名</th>
+                <th>作成者</th>
+                <th>作成日時</th>
+                <th>参加ユーザー選択</th>
+                <th>参加ボタン</th>
+                <th>削除ボタン</th>
+            </tr>
+        </table>
+    </div>
+    <script src="{% static 'index.js' %}"></script>
+</body>
+
+</html>
