@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <title>Amazon Chime Meeting</title>
+    <script>
+        window.meeting = JSON.parse(`{{ meeting|safe }}`);
+        window.attendee = JSON.parse(`{{ attendee|safe }}`);
+    </script>
+</head>
+<body>
+    <div>
+        <div id="meeting title">
+            <h1>Amazon Chime Meeting</h1>
+        </div>
+        <div id="video-view-div">
+            <video id="video-view"></video>
+        </div>
+        <audio id="audio-view"></audio>
+    </div>
+    <script src="{% static 'dist/meeting.js' %}"></script>
+</body>
+</html>

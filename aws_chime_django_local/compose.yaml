@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:8.4
+    ports:
+      - "3306:3306"
+    container_name: chime_db
+    volumes:
+      - .local/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: chime_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+
+  server:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: local
+    platform: linux/amd64
+    container_name: chime_video_meeting
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - ~/.aws/credentials:/root/.aws/credentials:ro
+      - ~/.aws/config:/root/.aws/config:ro
+    command: python src/manage.py runserver 0.0.0.0:8000
+    tty: true
+    expose:
+      - 8000
+    environment:
+      # FIXME:
+      - AWS_PROFILE=default
+    depends_on:
+      - db
