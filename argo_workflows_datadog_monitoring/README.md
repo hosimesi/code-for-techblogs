@@ -1,7 +1,7 @@
 # argo_workflows_datadog_monitoring
 # Overview
 Repository for Montoring Argo Workflows using Datadog .\
-blog link: https://zenn.dev/articles/7c168941b33341
+blog link: https://zenn.dev/hosimesi/articles/7c168941b33341
 
 
 # How to use
