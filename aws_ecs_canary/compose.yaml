@@ -1,0 +1,22 @@
+services:
+  app-main:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: app-main
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      - APP_NAME=app-main
+
+  app-canary:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: app-canary
+    ports:
+      - "8081:8080"
+    restart: always
+    environment:
+      - APP_NAME=app-canary

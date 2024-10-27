@@ -1,0 +1,4 @@
+Makefile
+.terraform
+*.terraform.*
+*.tfstate*
