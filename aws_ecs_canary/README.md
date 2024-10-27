@@ -3,6 +3,8 @@
 Repository for Amazon ECS Canary Service.\
 blog link: https://zenn.dev/hosimesi/articles/903dcbad6e050b
 
+![overview](images/overview.png)
+
 
 # How to use
 1. Change directory.
