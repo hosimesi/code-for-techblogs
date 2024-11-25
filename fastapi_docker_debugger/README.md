@@ -17,3 +17,7 @@ blog link: https://zenn.dev/hosimesi/articles/95158c687ec12b
     ```bash
     $ uv run python pdb_code_sample.py
     ```
+4. Run debugger in Docker
+    ```bash
+    $ docker compose up --build
+    ```
