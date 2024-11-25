@@ -1,0 +1,6 @@
+{
+    "name": "FastAPI Dev Container",
+    "dockerComposeFile": "../compose.yaml",
+    "service": "fastapi-docker-debugger",
+    "workspaceFolder": "/app"
+}
