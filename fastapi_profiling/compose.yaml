@@ -1,0 +1,23 @@
+services:
+  fastapi-profiling:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    # command: [".venv/bin/python", "-m", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    # command: [".venv/bin/python", "-m", "cProfile", "-o", "output.pstats", "-m", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    # command: [".venv/bin/python", "-m", "scalene" , "--html", "--outfile" , "scalene.html", "-m", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    # command: [".venv/bin/python", "-m", "memray", "run", "--live" ,"-m", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    # command: [".venv/bin/python", "-m", "py-spy", "record", "-o", "profile.svg" ,"-m", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    command: ["sh", "-c", "sleep 1000000"]
+    container_name: fastapi-profiling
+    ports:
+      - "8000:8000"
+    volumes:
+      - ~/.config/gcloud:/root/.config/gcloud:ro
+      - ./cache/:/root/.cache/
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    env_file:
+      - .env
+
