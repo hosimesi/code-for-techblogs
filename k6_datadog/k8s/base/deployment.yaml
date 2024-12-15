@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-app-cpu
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: chat-app-cpu
+  template:
+    metadata:
+      labels:
+        app: chat-app-cpu
+    spec:
+      serviceAccountName: chat-app-serviceaccount
+      terminationGracePeriodSeconds: 60
+      nodeSelector:
+        cloud.google.com/gke-nodepool: chat-app-cpu-node-pool
+      containers:
+        - name: chat-app
+          env:
+            - name: HUGGINGFACE_HUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: hugging-face-secret
+                  key: token
+          ports:
+            - containerPort: 8000
+              name: chat-app
+          startupProbe:
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+            initialDelaySeconds: 240
+            periodSeconds: 10
+            httpGet:
+              port: 8000
+              scheme: HTTP
+              path: /
+          livenessProbe:
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            httpGet:
+              port: 8000
+              scheme: HTTP
+              path: /
+          readinessProbe:
+            timeoutSeconds: 2
+            successThreshold: 2
+            failureThreshold: 2
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            httpGet:
+              port: 8000
+              scheme: HTTP
+              path: /
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - sleep 50

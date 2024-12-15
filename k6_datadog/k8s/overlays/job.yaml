@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: k6-load-testing
+spec:
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      containers:
+        - name: k6-loadtest
+          image: asia-northeast1-docker.pkg.dev/<project-id>/chat-app/loadtest:latest
+          command: ["k6", "run", "--out", "statsd", "/app/main.js"]
+          env:
+            - name: K6_STATSD_ENABLE_TAGS
+              value: "true"
+            - name: K6_STATSD_ADDR
+              value: "datadog-agent.default.svc.cluster.local:8125"
+      restartPolicy: Never
