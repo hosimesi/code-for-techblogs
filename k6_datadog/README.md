@@ -7,7 +7,7 @@ blog link: https://zenn.dev/hosimesi/articles/8368d79e93b3ae
 # How to use
 1. Change directory.
     ```bash
-    cd path/to/fastapi_profiling
+    cd path/to/k6_datadog
     ```
 2. Replace Varivable
     - project id
