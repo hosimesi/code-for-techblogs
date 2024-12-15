@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat-app-cpu-service
+spec:
+  type: ClusterIP
+  selector:
+    app: chat-app-cpu
+  ports:
+    - port: 8000
+      targetPort: chat-app
+      protocol: "TCP"

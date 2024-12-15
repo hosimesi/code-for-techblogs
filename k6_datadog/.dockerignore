@@ -1,0 +1,8 @@
+.gitignore
+README.md
+.venv
+
+cache/
+infra/
+k8s
+Makefile

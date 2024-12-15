@@ -1,0 +1,16 @@
+FROM grafana/xk6:0.13.0 AS builder
+
+WORKDIR /xk6
+
+RUN xk6 build v0.51.0 \
+    --with github.com/phymbert/xk6-sse@v0.1.2 \
+    --with github.com/grafana/xk6-dashboard@v0.7.5 \
+    --output /xk6/myk6
+
+FROM alpine:3.19
+WORKDIR /app
+COPY --from=builder /xk6/myk6 /usr/bin/k6
+COPY ./loadtest /app
+
+USER 1001
+CMD ["/bin/sh"]

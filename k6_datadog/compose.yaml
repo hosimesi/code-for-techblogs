@@ -1,0 +1,30 @@
+services:
+  k6-datadog:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: [".venv/bin/python", "-m", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    container_name: k6-datadog
+    ports:
+      - "8000:8000"
+    volumes:
+      - ~/.config/gcloud:/root/.config/gcloud:ro
+      - ./cache/:/root/.cache/
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    env_file:
+      - .env
+
+  loadtest:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.loadtest
+    container_name: "loadtest"
+    volumes:
+      - ./loadtest:/app/loadtest
+    command: ["/bin/sh"]
+    depends_on:
+      - k6-datadog
+    tty: true
+    restart: always
