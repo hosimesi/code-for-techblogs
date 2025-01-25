@@ -1,0 +1,11 @@
+[project]
+name = "openllmetry"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "openai>=1.60.1",
+    "python-dotenv>=1.0.1",
+    "traceloop-sdk>=0.36.1",
+]
