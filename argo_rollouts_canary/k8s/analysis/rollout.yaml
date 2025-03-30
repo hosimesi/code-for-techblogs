@@ -1,0 +1,61 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: rollouts-auto-demo
+spec:
+  replicas: 5
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: rollouts-auto-demo
+  template:
+    metadata:
+      labels:
+        app: rollouts-auto-demo
+    spec:
+      containers:
+        - name: rollouts-auto-demo
+          image: kostiscodefresh/summer-of-k8s-app:v2
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              memory: 32Mi
+              cpu: 5m
+  strategy:
+    canary:
+      steps:
+        - setWeight: 20
+        - analysis:
+            templates:
+              - templateName: rollouts-auto-demo-response-check
+            args:
+              - name: serviceName
+                value: rollouts-auto-demo.default.svc.cluster.local
+        - pause: {}
+        - setWeight: 40
+        - analysis:
+            templates:
+              - templateName: rollouts-auto-demo-response-check
+            args:
+              - name: serviceName
+                value: rollouts-auto-demo.default.svc.cluster.local
+        - pause: { duration: 10 }
+        - setWeight: 60
+        - analysis:
+            templates:
+              - templateName: rollouts-auto-demo-response-check
+            args:
+              - name: serviceName
+                value: rollouts-auto-demo.default.svc.cluster.local
+        - pause: { duration: 10 }
+        - setWeight: 80
+        - analysis:
+            templates:
+              - templateName: rollouts-auto-demo-response-check
+            args:
+              - name: serviceName
+                value: rollouts-auto-demo.default.svc.cluster.local
+        - pause: { duration: 10 }
