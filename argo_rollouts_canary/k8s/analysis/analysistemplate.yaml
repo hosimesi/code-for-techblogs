@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: rollouts-auto-demo-response-check
+spec:
+  args:
+    - name: serviceName
+  metrics:
+    - name: check-ver-1-0
+      interval: 30s
+      count: 3
+      successCondition: 'result | regexFind("ver: 1.0") != ""'
+      failureLimit: 1
+      provider:
+        web:
+          url: 'http://{{args.serviceName}}/callme'
+          method: GET
+          timeoutSeconds: 5
