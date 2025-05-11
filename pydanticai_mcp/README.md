@@ -1,6 +1,6 @@
 # pydanticai-mcp
 
-blog link: https://zenn.dev/articles/4fbd8d43d1f11a
+blog link: https://zenn.dev/hosimesi/articles/11de86ee2efc0a
 
 ## Overview
 Implementation examples of Model Context Protocol (MCP) using PydanticAI. This project demonstrates how to use PydanticAI as an MCP client and how to implement PydanticAI within an MCP server.
