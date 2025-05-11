@@ -19,7 +19,7 @@ PydanticAIを使ってMCPを触ってみたいと思います。
 Model Context Protocol(MCP)は、[Anthropic](https://www.google.com/search?q=anthropic+mcp&sourceid=chrome&ie=UTF-8)が提唱したAIアプリケーションが共通のインターフェースを使用して外部のツールやサービスに接続できるように標準化されたプロトコルです。
 
 ## 環境構築
-[uv](https://docs.astral.sh/uv/guides/install-python/)を使用して環境を構築します。まずは、必要になるpydantic-aiと監視のためのlogfireをインストールします。
+[uv](https://docs.astral.sh/uv/guides/install-python/)を使用して環境を構築します。まずは、必要になるpydantic-aiをインストールします。
 ```bash
 $ uv init
 ```
